@@ -46,7 +46,7 @@ class ResultSuSiE:
         self.pip = np.ones(p) / p
         self.converged = False
 
-    def fit(self, L, n, R, XtX, Xty, yty, XtX_d, max_iter, tol):
+    def fit(self, L, n, R, XtX, Xty, yty, XtX_d, max_iter, tol, verbose):
         """
         Fit the SuSiE model to the data.
         """
@@ -60,14 +60,15 @@ class ResultSuSiE:
             self.update_residual_variance(n, XtX, Xty, yty, XtX_d)
             elbo[i] = self.get_elbo_SuSiE(n, XtX, Xty, yty, XtX_d)
 
-            print("objective:", elbo[i])
+            if verbose:
+                print('ELBO =', elbo[i], 'Diff =', elbo[i] - elbo[i - 1])
 
             if (elbo[i] - elbo[i-1]) < tol * np.abs(elbo[i]):
                 self.converged = True
                 break
             niter = i
 
-        print("Stage1: iterations={}".format(niter))
+        print("Stage1 finished, iterations={}".format(niter))
 
         self.get_cs(L, R)
         self.get_pip()
@@ -257,7 +258,7 @@ class ResultFunmap:
         self.sigma2 = sigma2
         self.init = False
 
-    def fit(self, L, p, m, n, R, A, XtX, Xty, yty, XtX_d, max_iter, tol):
+    def fit(self, L, p, m, n, R, A, XtX, Xty, yty, XtX_d, max_iter, tol, verbose):
         """
         Perform the Funmap algorithm to update the model parameters and auxiliary variables.
         """
@@ -271,7 +272,8 @@ class ResultFunmap:
             self.update_residual_variance(n, XtX, Xty, yty, XtX_d)
             elbo[i] = self.get_elbo_Funmap(L, p, m, n, A, XtX, Xty, yty, XtX_d)
 
-            print("objective:", elbo[i])
+            if verbose:
+                print('ELBO =', elbo[i], 'Diff =', elbo[i] - elbo[i - 1])
 
             if (elbo[i] - elbo[i-1]) < tol * np.abs(elbo[i]):
                 self.converged = True
@@ -279,9 +281,9 @@ class ResultFunmap:
             niter = i
 
         if self.init:
-            print("Stage2: iterations={}".format(niter))
+            print("Stage2 finished, iterations={}".format(niter))
         if not self.init:
-            print("Stage3: iterations={}".format(niter))
+            print("Stage3 finished, iterations={}".format(niter))
 
         self.get_cs(L, R)
         self.get_pip()
@@ -602,21 +604,25 @@ def FUNMAP(args):
 
     # Stage 1
     s_init1 = ResultSuSiE(args.L, p)
-    s_init1.fit(args.L, args.n, data_R, XtX, Xty, yty, XtX_d, args.iter, args.tol)
+    s_init1.fit(args.L, args.n, data_R, XtX, Xty, yty, XtX_d, args.iter, args.tol, args.verbose)
 
     # Stage 2
     s_init2 = ResultFunmap(args.L, p, m)
     s_init2.init_susie(p, s_init1.alpha, s_init1.XtXr, s_init1.mu, s_init1.mu2, s_init1.sigma2, s_init1.V, s_init1.sets)
-    s_init2.fit(args.L, p, m, args.n, data_R, data_A, XtX, Xty, yty, XtX_d, args.iter, args.tol)
+    s_init2.fit(args.L, p, m, args.n, data_R, data_A, XtX, Xty, yty, XtX_d, args.iter, args.tol, args.verbose)
 
     # Stage 3
     s = ResultFunmap(args.L, p, m)
     s.init_funmap(s_init2.prior_weights, s_init2.alpha, s_init2.XtXr, s_init2.mu, s_init2.mu2, s_init2.mu_w,
                   s_init2.xi2, s_init2.rho, s_init2.V, s_init2.Sigma_w, s_init2.sigma_w2, s_init2.sigma2)
-    s.fit(args.L, p, m, args.n, data_R, data_A, XtX, Xty, yty, XtX_d, args.iter, args.tol)
+    s.fit(args.L, p, m, args.n, data_R, data_A, XtX, Xty, yty, XtX_d, args.iter, args.tol, args.verbose)
 
     s_result = pd.DataFrame({'SNP': snp_name, 'PIP': s.pip})
     s_result.to_csv(args.save+'/pip.csv', header=None, index=False)
+
+    file = open(args.save+'/sets.txt', "w")
+    file.write(str(s.sets))
+    file.close()
 
     return
 
@@ -630,10 +636,10 @@ parser.add_argument('--save', type=str, default=None, help='path to save result'
 parser.add_argument('--L', type=int, default=10, help='the maximum number of causal variables (default is 10)')
 parser.add_argument('--iter', type=int, default=100, help='the maximum number of iterations (default is 100)')
 parser.add_argument('--tol', type=float, default=5e-5, help='the convergence tolerance (default is 5e-5)')
+parser.add_argument('--verbose', action="store_true", help='the convergence tolerance (default is True)')
 args = parser.parse_args()
 
 if not os.path.exists(args.save):
     os.makedirs(args.save)
 FUNMAP(args)
 
-# python funmap_cmd.py --zdir zscore.txt --Rdir ld.txt --Adir anno.txt --n 50000 --save result

@@ -86,7 +86,7 @@ class ResultFunmap:
         self.sigma2 = sigma2
         self.init = False
 
-    def fit(self, L, p, m, n, R, A, XtX, Xty, yty, XtX_d, max_iter, tol):
+    def fit(self, L, p, m, n, R, A, XtX, Xty, yty, XtX_d, max_iter, tol, verbose=True):
         """
         Perform the Funmap algorithm to update the model parameters and auxiliary variables.
         """
@@ -100,7 +100,8 @@ class ResultFunmap:
             self.update_residual_variance(n, XtX, Xty, yty, XtX_d)
             elbo[i] = self.get_elbo_Funmap(L, p, m, n, A, XtX, Xty, yty, XtX_d)
 
-            print("objective:", elbo[i])
+            if verbose:
+                print('ELBO =', elbo[i], 'Diff =', elbo[i] - elbo[i-1])
 
             if (elbo[i] - elbo[i-1]) < tol * np.abs(elbo[i]):
                 self.converged = True
@@ -108,9 +109,9 @@ class ResultFunmap:
             niter = i
 
         if self.init:
-            print("Stage2: iterations={}".format(niter))
+            print("Stage2 finished, iterations={}".format(niter))
         if not self.init:
-            print("Stage3: iterations={}".format(niter))
+            print("Stage3 finished, iterations={}".format(niter))
 
         self.get_cs(L, R)
         self.get_pip()

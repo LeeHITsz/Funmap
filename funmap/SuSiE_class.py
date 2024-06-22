@@ -45,7 +45,7 @@ class ResultSuSiE:
         self.pip = np.ones(p) / p
         self.converged = False
 
-    def fit(self, L, n, R, XtX, Xty, yty, XtX_d, max_iter, tol):
+    def fit(self, L, n, R, XtX, Xty, yty, XtX_d, max_iter, tol, verbose=True):
         """
         Fit the SuSiE model to the data.
         """
@@ -59,14 +59,15 @@ class ResultSuSiE:
             self.update_residual_variance(n, XtX, Xty, yty, XtX_d)
             elbo[i] = self.get_elbo_SuSiE(n, XtX, Xty, yty, XtX_d)
 
-            print("objective:", elbo[i])
+            if verbose:
+                print('ELBO =', elbo[i], 'Diff =', elbo[i] - elbo[i-1])
 
             if (elbo[i] - elbo[i-1]) < tol * np.abs(elbo[i]):
                 self.converged = True
                 break
             niter = i
 
-        print("Stage1: iterations={}".format(niter))
+        print("Stage1 finished, iterations={}".format(niter))
 
         self.get_cs(L, R)
         self.get_pip()
