@@ -1,0 +1,3 @@
+{'cs': {'L0': array([259], dtype=int64)}, 'purity':     min_abs_corr  mean_abs_corr  median_abs_corr
+L0           1.0            1.0              1.0, 'cs_index': array([0], dtype=int64), 'coverage': 0    1.0
+dtype: float64, 'requested_coverage': 0.95}

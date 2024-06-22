@@ -108,12 +108,26 @@ Example input files are included in the [data](data) directory.
 
 ``` shell
 $> head result/PIP.csv
+rs1124048,2.9715906380123336e-05
+rs10494829,3.081396542481407e-05
+rs4915210,0.0002291531559568405
+rs3198583,0.00020109873830131964
+rs56368827,3.4685542804724356e-05
+rs3738255,0.00013761266975498287
+rs296569,3.677616215946866e-05
+rs296568,4.581612902221366e-05
+rs296567,4.3880889903258335e-05
+rs296566,5.091157180914241e-05
+
 ``` 
 
 - **set-level summary** file contains the infomation of credible sets.
 
 ``` shell
 $> head result/sets.txt
+{'cs': {'L0': array([259], dtype=int64)}, 'purity':     min_abs_corr  mean_abs_corr  median_abs_corr
+L0           1.0            1.0              1.0, 'cs_index': array([0], dtype=int64), 'coverage': 0    1.0
+dtype: float64, 'requested_coverage': 0.95}
 ``` 
 
 Example output files are included in the [result](result) directory.
