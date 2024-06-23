@@ -133,5 +133,5 @@ dtype: float64, 'requested_coverage': 0.95}
 Example output files are included in the [result](result) directory.
 
 ## Analysis
-Data and code for analysis can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis).
+Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis).
 
