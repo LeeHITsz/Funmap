@@ -62,7 +62,7 @@ optional arguments:
   --L L        the maximum number of causal variables (default is 10)
   --iter ITER  the maximum number of iterations (default is 100)
   --tol TOL    the convergence tolerance (default is 5e-5)
-  --verbose    the convergence tolerance (default is True)
+  --verbose    whether to display more information (default is True)
 ``` 
 
 For example: 

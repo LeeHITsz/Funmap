@@ -636,7 +636,7 @@ parser.add_argument('--save', type=str, default=None, help='path to save result'
 parser.add_argument('--L', type=int, default=10, help='the maximum number of causal variables (default is 10)')
 parser.add_argument('--iter', type=int, default=100, help='the maximum number of iterations (default is 100)')
 parser.add_argument('--tol', type=float, default=5e-5, help='the convergence tolerance (default is 5e-5)')
-parser.add_argument('--verbose', action="store_true", help='the convergence tolerance (default is True)')
+parser.add_argument('--verbose', action="store_true", help='whether to display more information (default is True)')
 args = parser.parse_args()
 
 if not os.path.exists(args.save):
