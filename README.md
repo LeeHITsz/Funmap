@@ -1,7 +1,7 @@
 # Funmap
 
 Funmap is a unified method to integrate high-dimensional 
-functional annotations with fine-mapping
+functional annotations with fine-mapping.
 
 ## Overview
 Fine-mapping aims to prioritize causal variants underlying 
@@ -84,7 +84,7 @@ result = FUNMAP(z, R, A, n=50000, L=10)
 ``` 
 
 For a completed example, please refer to
-[funmap_example.ipynb](funmap_example.ipynb)
+[funmap_example.ipynb](funmap_example.ipynb).
 
 ## Input files
 
@@ -131,3 +131,7 @@ dtype: float64, 'requested_coverage': 0.95}
 ``` 
 
 Example output files are included in the [result](result) directory.
+
+## Analysis
+Data and code for analysis can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis).
+
