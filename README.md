@@ -136,4 +136,4 @@ Example output files are included in the [result](result) directory.
 Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis).
 
 ## Reference
-Yuekai Li, Jiashun Xiao, Jingsi Ming, Yicheng Zeng, Mingxuan Cai. (2024). [Funmap: integrating high-dimensional functional annotations to improve fine-mapping](https://doi.org/10.1101/2024.06.25.24309459) _medRxiv_
+Yuekai Li, Jiashun Xiao, Jingsi Ming, Yicheng Zeng, Mingxuan Cai. (2024). [Funmap: integrating high-dimensional functional annotations to improve fine-mapping](https://doi.org/10.1093/bioinformatics/btaf017) _Bioinformatics_
