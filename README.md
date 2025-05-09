@@ -132,8 +132,86 @@ dtype: float64, 'requested_coverage': 0.95}
 
 Example output files are included in the [result](result) directory.
 
-## Analysis
-Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis).
-
 ## Reference
 Yuekai Li, Jiashun Xiao, Jingsi Ming, Yicheng Zeng, Mingxuan Cai. (2024). [Funmap: integrating high-dimensional functional annotations to improve fine-mapping](https://doi.org/10.1093/bioinformatics/btaf017) _Bioinformatics_
+
+# Real-data Analysis
+
+Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis). Here we only introduce the reproduction examples shown in the paper:
+
+## Reproducing Funmap Fine-mapping Analysis on Cholesterol Data
+
+This tutorial demonstrates how to reproduce the example presented in section 3.2 (Real data analysis) of the paper "Funmap: integrating high-dimensional functional annotations to improve fine-mapping", specifically Figure 5(b). We will implement the complete workflow from scratch to perform fine-mapping of SNPs associated with cholesterol levels.
+
+This example focuses on chromosome 8, position 5MB-8MB, which contains potential causal variants associated with cholesterol levels.
+
+### Step 1: Create Directory Structure
+
+First, create the necessary folder structure to organize our data and results:
+
+```bash
+mkdir -p realdata/annotation realdata/ld realdata/zscore realdata/input realdata/output
+```
+
+### Step 2: Download Required Data
+
+Run the following scripts to download the necessary data files:
+
+- 2.1 Download Annotation Files
+Run `get_annotation.py` to download the baseline functional annotation files:
+
+```bash
+python get_annotation.py
+```
+
+This will download and extract the baselineLF_v2.2.UKB annotation file for chromosome 8.
+
+- 2.2 Download Summary Statistics
+Run `get_summary_stats.py` to download cholesterol-related summary statistics:
+
+```bash
+python get_summary_stats.py
+```
+
+This script downloads both the SNP reference file and cholesterol summary statistics file.
+
+- 2.3 Download LD Files
+**Before running the next script, make sure you have AWS CLI installed and configured with appropriate credentials.**
+
+```bash
+python get_ld.py
+```
+
+This downloads the linkage disequilibrium (LD) matrix and related information for chromosome 8, position 5.
+
+### Step 3: Process and Align Data
+
+Run the `overlap.py` script to process and align the zscore, LD matrix, and annotation files:
+
+```bash
+python overlap.py
+```
+
+This script performs several important tasks:
+- Filters SNPs within the specified genomic region
+- Finds the intersection of SNPs across all data sources
+- Adjusts t-statistics for SNPs on the reverse strand
+- Saves processed data to the input directory for fine-mapping
+
+### Step 4: Run Fine-mapping Analysis
+
+Finally, run the Funmap algorithm on the prepared data:
+
+```bash
+python run_Funmap.py
+```
+
+This script:
+- Loads the processed LD matrix, annotation file, and z-scores
+- Runs the FUNMAP algorithm with L=10 components
+- Saves the results to the output directory, including:
+  - PIP (Posterior Inclusion Probability) for each SNP
+  - Selected SNP sets
+  - Annotation weights
+
+The final output files will be saved in the `realdata/output` directory.
