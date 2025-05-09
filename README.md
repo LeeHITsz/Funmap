@@ -132,16 +132,11 @@ dtype: float64, 'requested_coverage': 0.95}
 
 Example output files are included in the [result](result) directory.
 
-## Reference
-Yuekai Li, Jiashun Xiao, Jingsi Ming, Yicheng Zeng, Mingxuan Cai. (2024). [Funmap: integrating high-dimensional functional annotations to improve fine-mapping](https://doi.org/10.1093/bioinformatics/btaf017) _Bioinformatics_
-
-# Real-data Analysis
+## A full real data example
 
 Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis). Here we only introduce the reproduction examples shown in the paper:
 
-## Reproducing Funmap Fine-mapping Analysis on Cholesterol Data
-
-This tutorial demonstrates how to reproduce the example presented in section 3.2 (Real data analysis) of the paper "Funmap: integrating high-dimensional functional annotations to improve fine-mapping", specifically Figure 5(b). We will implement the complete workflow from scratch to perform fine-mapping of SNPs associated with cholesterol levels.
+Here, we provide a step-by-step tutorial to analyze real data with available LD matrix. We use the example presented in section 3.2 (Figure 5b) of the Funmap paper. We will implement the complete workflow from scratch to perform fine-mapping of SNPs associated with cholesterol levels.
 
 This example focuses on chromosome 8, position 5MB-8MB, which contains potential causal variants associated with cholesterol levels.
 
@@ -176,6 +171,9 @@ python get_summary_stats.py
 This script downloads both the SNP reference file and cholesterol summary statistics file.
 
 - 2.3 Download LD Files
+
+We suggest using the in-sample LD files. When the in-sample LD files are not available, we suggestusing the UKB reference LD matrices prepared by Prof. Alkes Price's group [https://registry.opendata.aws/ukbb-ld/](https://registry.opendata.aws/ukbb-ld/).
+
 **Before running the next script, make sure you have AWS CLI installed and configured with appropriate credentials.**
 
 ```bash
@@ -215,3 +213,6 @@ This script:
   - Annotation weights
 
 The final output files will be saved in the `realdata/output` directory.
+
+## Reference
+Yuekai Li, Jiashun Xiao, Jingsi Ming, Yicheng Zeng, Mingxuan Cai. (2024). [Funmap: integrating high-dimensional functional annotations to improve fine-mapping](https://doi.org/10.1093/bioinformatics/btaf017) _Bioinformatics_
