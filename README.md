@@ -134,7 +134,7 @@ Example output files are included in the [result](result) directory.
 
 ## A full real data example
 
-Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis). Here we only introduce the reproduction examples shown in the paper:
+Data and code for analysis in the paper can be viewed in [https://github.com/LeeHITsz/Funmap_analysis](https://github.com/LeeHITsz/Funmap_analysis). Here we only introduce an example shown in the paper:
 
 Here, we provide a step-by-step tutorial to analyze real data with available LD matrix. We use the example presented in section 3.2 (Figure 5b) of the Funmap paper. We will implement the complete workflow from scratch to perform fine-mapping of SNPs associated with cholesterol levels.
 
