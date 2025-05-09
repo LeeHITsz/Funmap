@@ -174,7 +174,7 @@ This script downloads both the SNP reference file and cholesterol summary statis
 
 We suggest using the in-sample LD files. When the in-sample LD files are not available, we suggestusing the UKB reference LD matrices prepared by Prof. Alkes Price's group [https://registry.opendata.aws/ukbb-ld/](https://registry.opendata.aws/ukbb-ld/).
 
-> Before running the next script, make sure you have AWS CLI installed and configured with appropriate credentials.
+**Before running the next script, make sure you have AWS CLI installed and configured with appropriate credentials.**
 
 ```bash
 python get_ld.py
