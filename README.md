@@ -153,7 +153,7 @@ mkdir -p realdata/annotation realdata/ld realdata/zscore realdata/input realdata
 Run the following scripts to download the necessary data files:
 
 - 2.1 Download Annotation Files
-Run `get_annotation.py` to download the baseline functional annotation files:
+Run `get_annotation.py` to download the baseline functional annotation files from [https://broad-alkesgroup-ukbb-ld.s3.amazonaws.com/UKBB_LD/baselineLF_v2.2.UKB.tar.gz](https://broad-alkesgroup-ukbb-ld.s3.amazonaws.com/UKBB_LD/baselineLF_v2.2.UKB.tar.gz):
 
 ```bash
 python get_annotation.py
