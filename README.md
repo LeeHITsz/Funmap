@@ -34,7 +34,7 @@ The following Python modules are required:
 * [pandas](https://pandas.pydata.org/) (version==2.1.3)
 * [matplotlib](https://matplotlib.org/) (version==3.8.2)
 
-To install SparsePro:
+To install Funmap:
 
 ``` shell
 git clone https://github.com/LeeHITsz/Funmap.git
